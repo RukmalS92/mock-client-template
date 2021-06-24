@@ -1,0 +1,29 @@
+// import Nebular Theme System and the default theme
+@import '~@nebular/theme/styles/theming';
+@import '~@nebular/theme/styles/themes/default';
+@import '~@nebular/theme/styles/themes/dark';
+@import '~@nebular/theme/styles/themes/cosmic';
+@import '~@nebular/theme/styles/themes/corporate';
+
+
+$nb-themes: nb-register-theme((
+
+  color-primary-100: #DB321D, // <- new primary color
+  color-primary-200: #DB321D,
+  color-primary-300: #DB321D,
+  color-primary-400: #DB321D,
+  color-primary-500: #DB321D,
+  color-primary-600: #7b51db,
+  color-primary-700: #5a37b8,
+  color-primary-800: #3e2494,
+  color-primary-900: #29157a,
+
+  text-basic-color: color-basic-800,
+  text-disabled-color: color-basic-600,
+), blood, default);
+
+$nb-themes: nb-register-theme((
+  sidebar-width : 10rem,
+  sidebar-width-compact : 6rem
+  
+), dark, dark);
