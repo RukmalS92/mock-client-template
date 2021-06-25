@@ -1,10 +1,24 @@
 <nb-layout>
   <nb-layout-header>
-    <button nbButton (click)='toggle()'>button</button>
+    <nb-layout-column>
+      <button nbButton ghost (click)='toggle()' status="primary"><nb-icon icon="menu-2"></nb-icon></button>
+    </nb-layout-column>
+    <nb-layout-column>
+      <nb-select style="padding: 10px;" placeholder="Select Theme" ([selected])="selectedTheme" (selectedChange) = "themeSelect($event)">
+        <nb-option value="default">default</nb-option>
+        <nb-option value="dark">Dark</nb-option>
+        <nb-option value="cosmic">cosmic</nb-option>
+      </nb-select>
+    </nb-layout-column>
   </nb-layout-header>
-  <nb-layout-footer></nb-layout-footer>
-  <nb-layout-column></nb-layout-column>
+  <nb-layout-footer>Rukmal Senarath - All rights reserved</nb-layout-footer>
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
   <nb-sidebar tag='left'>
-    <button nbButton ghost status="danger"><nb-icon icon="star"></nb-icon></button>
+    <a routerLink = 'dashboard' nbButton ghost status="success" *ngIf = "sidebarstate"><nb-icon icon="home" ></nb-icon></a>
+    <a routerLink = 'dashboard' nbButton ghost status="success" *ngIf = "!sidebarstate"><nb-icon icon="home"></nb-icon>Dashboard</a>
+    <a routerLink = 'auth' nbButton ghost status="success" *ngIf = "sidebarstate"><nb-icon icon="person" ></nb-icon></a>
+    <a routerLink = 'auth' nbButton ghost status="success" *ngIf = "!sidebarstate"><nb-icon icon="person"></nb-icon>Login</a>
   </nb-sidebar>
  </nb-layout>

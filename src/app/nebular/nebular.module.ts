@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NebularRoutingModule } from './nebular-routing.module';
-import { NbButtonModule, NbIconModule, NbLayoutModule, NbSidebarModule, NbThemeModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule, NbSidebarModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { NbButtonGroupModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -17,14 +17,22 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbSidebarModule.forRoot(),
     NbButtonModule,
     NbIconModule,
-    NbEvaIconsModule
+    NbEvaIconsModule,
+    NbSelectModule,
+    NbCardModule,
+    NbInputModule,
+    NbToastrModule.forRoot(),
   ],
   exports : [
     NbLayoutModule,
     NbSidebarModule,
     NbButtonModule,
     NbIconModule,
-    NbEvaIconsModule
+    NbEvaIconsModule,
+    NbSelectModule,
+    NbCardModule,
+    NbInputModule,
+    NbToastrModule,
   ]
 })
 export class NebularModule { }
