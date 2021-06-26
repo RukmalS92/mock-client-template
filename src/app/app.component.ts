@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NotificationService } from './global-services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit{
 
   constructor(
     private nbsidebarservice : NbSidebarService,
-    private nbthemeservice : NbThemeService
+    private nbthemeservice : NbThemeService,
+    private notificationservice : NotificationService
   ) {}
 
   ngOnInit() {

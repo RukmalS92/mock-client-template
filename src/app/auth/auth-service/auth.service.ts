@@ -3,16 +3,19 @@ import { stringify } from '@angular/compiler/src/util';
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { NbToastrService } from '@nebular/theme';
 import { Store } from '@ngrx/store';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, of, Subscription, Subject } from 'rxjs';
 import { map, retry, catchError } from 'rxjs/operators';
 import { AuthenticateUser, UnauthenticateUser } from 'src/app/actions/auth.actions';
 import { ErrorhandlerService } from 'src/app/global-services/errorhandler.service';
+import { NotificationService } from 'src/app/global-services/notification.service';
 import { State } from 'src/app/reducers';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnInit, OnDestroy{
+
+@Injectable()
+export class AuthService implements OnDestroy{
   private signupurl = "http://localhost:3000/auth/signup";
   private signinurl = "http://localhost:3000/auth/signin";
 
@@ -23,7 +26,7 @@ export class AuthService implements OnInit, OnDestroy{
     private http : HttpClient,
     private erroHandler : ErrorhandlerService,
     private store : Store<State>,
-    private toastr : NbToastrService
+    private notifications : NotificationService
     ) { }
 
   signUpUser(username : string, useremail : string, password : string) {
@@ -45,7 +48,7 @@ export class AuthService implements OnInit, OnDestroy{
                   (signupinfo : any) => {
                     console.log(signupinfo)
                     if(signupinfo.status === 'success'){
-                      this.store.dispatch(new AuthenticateUser({userermail : signupinfo.email, username: signupinfo.username, token : signupinfo.token}));
+                      this.store.dispatch(new AuthenticateUser({useremail : signupinfo.email, username: signupinfo.username, token : signupinfo.token}));
                     }
                     else{
                       this.store.dispatch(new UnauthenticateUser());
@@ -67,22 +70,24 @@ export class AuthService implements OnInit, OnDestroy{
                   return res
                 }
               ),
-              catchError(this.erroHandler.handleError)
+              catchError((e) => {
+                return this.erroHandler.handleError(e)
+              })
             )
             .subscribe(
               (response : any) => {
-                if(response.status === 'success'){
-                  this.store.dispatch(new AuthenticateUser({userermail : response.email, username: response.username, token : response.token}));
+                if(response.error){
+                  this.notifications.errorNotificationSubject.next(response.error)
+                  this.store.dispatch(new UnauthenticateUser());
                 }
                 else{
-                  this.store.dispatch(new UnauthenticateUser());
+                  this.notifications.successNotificationSubject.next(response.username);
+                  this.store.dispatch(new AuthenticateUser({useremail : response.email, 
+                                                            username: response.username, 
+                                                            token : response.token}));
                 }
               }
             )
-  }
-
-  ngOnInit() : void {
-
   }
 
   ngOnDestroy() : void {

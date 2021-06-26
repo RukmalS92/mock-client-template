@@ -23,7 +23,7 @@ export function authReducer(state = initialState, action: AuthActions): authStat
     case AuthActionTypes.authenticate:
       const authentcatedState : authState = {
         isAuthenticate : true,
-        useremail : action.payload.userermail,
+        useremail : action.payload.useremail,
         username : action.payload.username,
         token : action.payload.token
       }

@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ErrorhandlerService } from './global-services/errorhandler.service';
 import { NbToastrModule } from '@nebular/theme';
+import { NotificationService } from './global-services/notification.service';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { NbToastrModule } from '@nebular/theme';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [ErrorhandlerService],
+  providers: [ErrorhandlerService, NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

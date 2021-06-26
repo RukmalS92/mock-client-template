@@ -7,7 +7,7 @@ export enum AuthActionTypes {
 
 export class AuthenticateUser implements Action {
   readonly type = AuthActionTypes.authenticate;
-  constructor(public payload: { userermail : string, username : string, token : string }) { }
+  constructor(public payload: { useremail : string, username : string, token : string }) { }
 }
 
 export class UnauthenticateUser implements Action {

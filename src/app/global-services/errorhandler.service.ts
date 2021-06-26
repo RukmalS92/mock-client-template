@@ -1,28 +1,53 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { NbToastrService } from '@nebular/theme';
-import { throwError } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 
-interface errormodel {
-  errorType : string,
+export interface httpErrorModel {
+  errorStatus : number,
+  errorStatusText : string,
+  errorMessage : string,
+  errorMessagefromServer : string,
+  errorStatusTextfromServer : string,
+  url : string
+}
+
+export interface normalErrorModel {
   errorMessage : string
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorhandlerService implements OnInit{
 
-  constructor(private toaster : NbToastrService) { }
+@Injectable()
+export class ErrorhandlerService{
+  constructor() {  }
 
-  ngOnInit() {
-    this.toaster.show('rukmal', 'rrr', {status : 'danger'});
-  }
-
-
-  handleError(error : HttpErrorResponse) {
-    console.log(error);
-    // this.toaster.show('rukmal', 'rrr', {status : 'danger'});
-    return throwError('');
+  handleError(error : any) {
+    if(error instanceof HttpErrorResponse){
+      console.log({httpError : `errormessage : ${error.message} and errorstatus : ${error.status}`})
+      const errorObject : httpErrorModel = {
+        errorMessage : error.message,
+        errorMessagefromServer : error.error.message,
+        errorStatusText : error.statusText,
+        errorStatusTextfromServer: error.error.status,
+        errorStatus : error.status,
+        url : error.url
+      }
+      return new Observable((observer) => {
+        observer.next({error : errorObject});
+        observer.complete()
+      })
+    }
+    else if(error instanceof ErrorEvent){
+      console.log({normalError : `errormessage : ${error.message}`})
+      const errorObject : normalErrorModel = {
+        errorMessage : error.error.message
+      }
+      return new Observable((observer) => {
+        observer.next({error : errorObject});
+        observer.complete()
+      })
+    }
   }
 }
