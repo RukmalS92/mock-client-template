@@ -8,7 +8,9 @@ import { map, retry, catchError } from 'rxjs/operators';
 import { AuthenticateUser, UnauthenticateUser } from 'src/app/actions/auth.actions';
 import { ErrorhandlerService } from 'src/app/global-services/errorhandler.service';
 import { NotificationService } from 'src/app/global-services/notification.service';
-import { State } from 'src/app/reducers';
+import { authState } from 'src/app/reducers/auth.reducer'
+import { selectCurrentAuthState, State } from 'src/app/reducers';
+import { Route, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +18,25 @@ import { State } from 'src/app/reducers';
 
 @Injectable()
 export class AuthService implements OnDestroy{
-  private signupurl = "http://localhost:3000/auth/signup";
-  private signinurl = "http://localhost:3000/auth/signin";
+  private signupurl = "http://localhost:5000/auth/signup";
+  private signinurl = "http://localhost:5000/auth/signin";
 
   private signUpSubscription : Subscription = Subscription.EMPTY;
   private signInSubscription : Subscription = Subscription.EMPTY;
+
+  private currentAuthStatus : authState;
   
   constructor(
     private http : HttpClient,
     private erroHandler : ErrorhandlerService,
     private store : Store<State>,
-    private notifications : NotificationService
-    ) { }
+    private notifications : NotificationService,
+    private router : Router,
+    ) {
+      store.select(selectCurrentAuthState).subscribe(
+        (auth : authState) => this.currentAuthStatus = auth
+      )
+     }
 
   signUpUser(username : string, useremail : string, password : string) {
     const userObj = {
@@ -66,7 +75,7 @@ export class AuthService implements OnDestroy{
             .pipe(
               retry(2),
               map(
-                (res : any) => {
+                (res : HttpResponse<any>) => {
                   return res
                 }
               ),
@@ -85,9 +94,27 @@ export class AuthService implements OnDestroy{
                   this.store.dispatch(new AuthenticateUser({useremail : response.email, 
                                                             username: response.username, 
                                                             token : response.token}));
+                  this.setAuthToken(response.token)
+                  this.router.navigateByUrl('dashboard');
                 }
               }
             )
+  }
+
+  private setAuthToken(token) {
+    localStorage.setItem('token', token);
+  }
+
+  getAuthToken() {
+    return localStorage.getItem('token');
+  }
+
+  signOut() {
+    this.store.dispatch(new UnauthenticateUser());
+  }
+
+  isAuth() {
+    return this.currentAuthStatus;
   }
 
   ngOnDestroy() : void {

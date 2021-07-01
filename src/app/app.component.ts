@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { NbSidebarService, NbThemeService } from '@nebular/theme';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { NotificationService } from './global-services/notification.service';
+import { selectCurrentAuthState, State } from './reducers';
+import { authState } from './reducers/auth.reducer';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +16,15 @@ export class AppComponent implements OnInit{
   title = 'mock-dashboard';
   sidebarstate : boolean = false;
   selectedTheme : string;
+  authData : Observable<authState>;
 
   constructor(
     private nbsidebarservice : NbSidebarService,
     private nbthemeservice : NbThemeService,
-    private notificationservice : NotificationService
-  ) {}
+    private notificationservice : NotificationService,
+  ) {
+
+  }
 
   ngOnInit() {
     this.nbsidebarservice.onToggle()
@@ -25,7 +32,7 @@ export class AppComponent implements OnInit{
       (data) => {
         this.sidebarstate = !this.sidebarstate;
       }
-    )
+    );
   }
 
   toggle() {

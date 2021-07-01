@@ -31,7 +31,7 @@ export function authReducer(state = initialState, action: AuthActions): authStat
 
     case AuthActionTypes.unauthenticate:
       const unAuthentcatedState : authState = {
-        isAuthenticate : true,
+        isAuthenticate : false,
         useremail : "",
         username : "",
         token : ""

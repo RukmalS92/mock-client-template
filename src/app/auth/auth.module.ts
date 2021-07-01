@@ -9,22 +9,32 @@ import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ErrorhandlerService } from '../global-services/errorhandler.service';
+import { AuthguardService } from './auth-guard/authguard.service';
+import { SignupComponent } from './signup/signup.component';
+import { SigninComponent } from './signin/signin.component';
+import { RouterModule } from '@angular/router';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 
 @NgModule({
   declarations: [
-    AuthComponent
+    AuthComponent,
+    SignupComponent,
+    SigninComponent
   ],
   imports: [
     CommonModule,
     AuthRoutingModule,
+    RouterModule,
     HttpClientModule,
     NebularModule,
     MaterialModule,
     FormsModule,
     FlexLayoutModule
   ],
-  providers : [AuthService]
+  providers : [AuthService, AuthguardService, ]
 })
 export class AuthModule { }

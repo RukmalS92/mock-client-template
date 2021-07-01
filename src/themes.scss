@@ -24,6 +24,6 @@ $nb-themes: nb-register-theme((
 
 $nb-themes: nb-register-theme((
   sidebar-width : 15rem,
-  sidebar-width-compact : 5rem
-  
+  sidebar-width-compact : 5rem,
+  toastr-padding : 0.5rem
 ), dark, dark);

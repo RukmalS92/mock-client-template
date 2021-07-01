@@ -15,6 +15,8 @@ import { environment } from '../environments/environment';
 import { ErrorhandlerService } from './global-services/errorhandler.service';
 import { NbToastrModule } from '@nebular/theme';
 import { NotificationService } from './global-services/notification.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './global-services/auth-interceptor.service';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { NotificationService } from './global-services/notification.service';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [ErrorhandlerService, NotificationService],
+  providers: [ErrorhandlerService, 
+              NotificationService,
+              { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
