@@ -1,1 +1,30 @@
-<p>signin works!</p>
+<div fxLayout='row' fxLayoutAlign='center center' style="padding: 30px;">
+    <nb-card status="" fxFlex='700px'>
+        <nb-card-header fxLayout='column' fxLayoutAlign=' center' fxLayoutGap='10px'>
+            <h4>Sign In</h4>
+            <p>Please sign in to gain access...</p>
+        </nb-card-header>
+    
+        <nb-card-body fxLayout='column' fxLayoutAlign=" center">
+            <form action="" ngForm #signinform='ngForm' (ngSubmit)="signin(signinform)">
+                <div fxLayout = "row">
+                    <div fxLayout='column' fxLayoutAlign="center" fxLayoutGap="20px" fxFlex='500px'>
+                        <div fxLayout="column" fxLayoutGap="5px">
+                            <p>Email </p>
+                            <input nbInput type="email" fullWidth name="email" ngModel #emailinput placeholder="enter email">
+                        </div>
+                        <div fxLayout="column" fxLayoutGap="5px">
+                            <p>Password</p>
+                            <input nbInput type="password" fullWidth name="password" ngModel #passwordinput placeholder="enter passowrd">
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <p>Want to register? </p><a routerLink='/signup'>SignUp</a>
+                        </div>
+                        <button nbButton action="Submit" status="warning">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </nb-card-body>
+    </nb-card>
+    
+</div>

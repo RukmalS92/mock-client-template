@@ -1,9 +1,37 @@
-<nb-card status="" accent="danger">
-    <nb-card-header>
-        Sign In
-    </nb-card-header>
+<div fxLayout='row' fxLayoutAlign='center center'>
+    <nb-card status="" accent="primary" fxFlex='700px'>
+        <nb-card-header fxLayout='column' fxLayoutAlign='center center'>
+            <h5>Register</h5>
+        </nb-card-header>
+    
+        <nb-card-body fxLayout='column'>
+            <form action="" ngForm #signupform='ngForm'>
+                <div fxLayout='row' fxLayoutAlign='center'>
+                    <div fxLayout='column' fxFlex='500px'>
+                        <div fxLayout = 'column'>
+                            <p>Username : </p>
+                            <input nbInput status='primary' fullWidth type="text" name='username' ngModel #username='ngModel' placeholder="Enter Username">
+                        </div>
+                        <div fxLayout = 'column'>
+                            <p>Email : </p>
+                            <input nbInput status='primary' fullWidth type="email" name='email' ngModel #email='ngModel' placeholder="Enter email">
+                        </div>
+                        <div fxLayout = 'column'>
+                            <p>Passowrd : </p>
+                            <input nbInput status='primary' fullWidth type="passowrd" name='passowrd' ngModel #password='ngModel' placeholder="Enter passowrd">
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <p>Already have an Account ? </p><a routerLink='signin'>Login </a>
+                        </div>
+                        <div fxLayout='row' fxLayoutAlign='center'>
+                            <div fxFlex='200px'>
+                                <button nbButton fullWidth action="Submit" status="warning">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </nb-card-body>
+    </nb-card>
+</div>
 
-    <nb-card-body fxLayout fxLayoutAlign="center">
-        
-    </nb-card-body>
-</nb-card>
