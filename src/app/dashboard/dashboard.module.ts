@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NebularModule } from '../nebular/nebular.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '../material/material.module';
 
 
 @NgModule({
@@ -11,7 +14,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    NebularModule,
+    FlexLayoutModule,
+    MaterialModule
   ]
 })
 export class DashboardModule { }

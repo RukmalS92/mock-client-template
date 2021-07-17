@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UnauthenticateUser } from 'src/app/actions/auth.actions';
 import { selectCurrentAuthState, State } from 'src/app/reducers';
+import { MatInput } from '@angular/material/input'
 
 @Component({
   selector: 'app-dashboard',
